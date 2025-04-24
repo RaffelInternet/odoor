@@ -9,7 +9,7 @@
    ]},
   {env,[]},
   {modules, []},
-  {maintainers, ["Neurotec"]},
+  {maintainers, ["Neurotec, RaffelInternet"]},
   {licenses, ["GPLv3"]},
-  {links, [{"Github", "https://github.com/Neurotec/odoor"}]}
+  {links, [{"Github", "https://github.com/RaffelInternet/odoor"}]}
  ]}.

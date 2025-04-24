@@ -18,7 +18,7 @@
 
 %% API exports
 -export([auth/4,version/1]).
--export([call/5, call/4, check_access_rights/3, search/3, read/3, read/4, create/3, write/4,unlink/3]).
+-export([call/5, call/4, check_access_rights/3, search/3, read/3, read/4, search_read/3, create/3, write/4,unlink/3]).
 
 %%====================================================================
 %% API functions
@@ -72,6 +72,20 @@ call(#odoo{} = Odoo, Model, Method, Args, Keywords) ->
 -spec search(odoo(), model(), any()) ->  {ok, [integer()]} | {fault, any()} | {error, any()}.
 search(#odoo{} = Odoo, Model, Filter) ->
     case call(Odoo, Model, 'search', Filter, #{}) of
+        {ok, [Ids]} ->
+            {ok, Ids};
+        Err ->
+            Err
+    end.
+
+%% @doc Search and read records
+%% Records can be listed and filtered via search().
+%% search() takes a mandatory domain filter (possibly empty), and returns the database identifiers of all records matching the filter. To list customer companies for instance:
+%% <a href="http://www.odoo.com/documentation/9.0/api_integration.html#list-records">More info</a>
+%% @end
+-spec search_read(odoo(), model(), any()) ->  {ok, [integer()]} | {fault, any()} | {error, any()}.
+search_read(#odoo{} = Odoo, Model, Filter) ->
+    case call(Odoo, Model, 'search_read', Filter, #{}) of
         {ok, [Ids]} ->
             {ok, Ids};
         Err ->
